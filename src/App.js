@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MenuPage from "./pages/MenuPage";
 import CartPage from "./pages/CartPage";
 import OrderConfirmation from "./pages/OrderConfirmation";
-import QRScanner from "./components/QRScanner";
 
 function App() {
   // Sepet state’i
@@ -58,8 +57,7 @@ function App() {
         {/* Sipariş onay ekranı */}
         <Route path="/confirmation" element={<OrderConfirmation />} />
 
-        {/* QR Scanner ekranı */}
-        <Route path="/scan" element={<QRScanner />} />
+     
       </Routes>
     </Router>
   );
