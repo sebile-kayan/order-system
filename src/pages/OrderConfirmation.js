@@ -1,56 +1,42 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Header from "../components/Header";
-import "./OrderConfirmation.css";
 
 const OrderConfirmation = () => {
   return (
-    <div className="confirmation-page">
-      <Header />
-      
-      <div className="confirmation-container">
-        <div className="confirmation-content">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="bg-white rounded-lg shadow p-8 max-w-md w-full flex flex-col items-center">
           {/* Başarı İkonu */}
-          <div className="success-icon">
-            <div className="checkmark">
-              <div className="checkmark-circle">
-                <div className="checkmark-stem"></div>
-                <div className="checkmark-kick"></div>
-              </div>
-            </div>
+          <div className="mb-6">
+            <svg className="w-16 h-16 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <circle cx="12" cy="12" r="10" strokeWidth="2" stroke="currentColor" fill="none" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12l2 2 4-4" />
+            </svg>
           </div>
-          
           {/* Başlık */}
-          <h1 className="confirmation-title">Siparişiniz Verildi!</h1>
-          
+          <h1 className="text-2xl font-bold mb-4 text-center">Siparişiniz Verildi!</h1>
           {/* Açıklama */}
-          <p className="confirmation-message">
+          <p className="text-gray-600 mb-6 text-center">
             Siparişiniz başarıyla alındı. Garson siparişinizi getirene kadar bekleyin.
           </p>
-          
           {/* Ek Bilgiler */}
-          <div className="order-info">
-            <div className="info-item">
-              <span className="info-label">Tahmini Süre:</span>
-              <span className="info-value">15-20 dakika</span>
+          <div className="w-full mb-6">
+            <div className="flex justify-between mb-2">
+              <span className="font-semibold text-gray-700">Tahmini Süre:</span>
+              <span className="text-gray-900">15-20 dakika</span>
             </div>
-            <div className="info-item">
-              <span className="info-label">Sipariş No:</span>
-              <span className="info-value">#{Math.floor(Math.random() * 10000)}</span>
+            <div className="flex justify-between">
+              <span className="font-semibold text-gray-700">Sipariş No:</span>
+              <span className="text-gray-900">#{Math.floor(Math.random() * 10000)}</span>
             </div>
           </div>
-          
           {/* Butonlar */}
-          <div className="action-buttons">
-            <Link to="/" className="back-to-menu-btn">
-              Menüye Dön
-            </Link>
-            <button className="new-order-btn" onClick={() => window.location.href = "/"}>
+          <div className="flex space-x-4 w-full">
+            <Link to="/" className="flex-1 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-center">Menüye Dön</Link>
+            <button className="flex-1 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" onClick={() => window.location.href = "/"}>
               Yeni Sipariş
             </button>
           </div>
         </div>
-      </div>
     </div>
   );
 };

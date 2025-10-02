@@ -1,65 +1,60 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { CartProvider } from "./context/CartContext";
+import { TableProvider } from "./context/TableContext";
+import Header from "./components/Header";
+import PaymentButton from "./components/PaymentButton";
 import MenuPage from "./pages/MenuPage";
 import CartPage from "./pages/CartPage";
 import OrderConfirmation from "./pages/OrderConfirmation";
+import OrderTracking from "./pages/OrderTracking";
+import PaymentPage from "./pages/PaymentPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-  // Sepet state’i
-  const [cart, setCart] = useState([]);
-
-  // Sepete ürün ekleme
-  const addToCart = (item) => {
-    const index = cart.findIndex((i) => i.id === item.id);
-    if (index !== -1) {
-      const newCart = [...cart];
-      newCart[index].quantity = (newCart[index].quantity || 1) + 1;
-      setCart(newCart);
-    } else {
-      setCart([...cart, { ...item, quantity: 1 }]);
-    }
-  };
-
-  const removeFromCart = (itemId) => {
-    setCart(cart.filter((item) => item.id !== itemId));
-  };
-
-  const updateQuantity = (itemId, quantity) => {
-    if (quantity < 1) return;
-    const newCart = cart.map((item) =>
-      item.id === itemId ? { ...item, quantity } : item
-    );
-    setCart(newCart);
-  };
-
-  const calculateTotal = () => {
-    return cart.reduce((sum, item) => sum + item.price * item.quantity , 0);
-  };
-
-
-  // Siparişi gönderme
-  const placeOrder = () => {
-    // Burada backend’e sipariş gönderme işlemi gelecek
-    // Şimdilik sepeti temizleyip onay sayfasına yönlendiriyoruz
-    setCart([]);
-    window.location.href = "/confirmation";
-  };
-
   return (
-    <Router>
-      <Routes>
-        {/* Menü ekranı */}
-        <Route path="/" element={<MenuPage addToCart={addToCart} />} />
+    <TableProvider>
+      <CartProvider>
+        <Router>
+          <div className="min-h-screen bg-gray-50">
+            <Header />
+            <Routes>
+              {/* Ana sayfa - Menü (Mock QR ile) */}
+              <Route path="/" element={
+                <ProtectedRoute>
+                  <MenuPage />
+                </ProtectedRoute>
+              } />
 
-        {/* Sepet ekranı */}
-        <Route path="/cart" element={<CartPage cart={cart} removeFromCart={removeFromCart} updateQuantity={updateQuantity} calculateTotal={calculateTotal} placeOrder={placeOrder} />} />
+              <Route path="/cart" element={
+                <ProtectedRoute>
+                  <CartPage />
+                </ProtectedRoute>
+              } />
 
-        {/* Sipariş onay ekranı */}
-        <Route path="/confirmation" element={<OrderConfirmation />} />
+              <Route path="/confirmation" element={
+                <ProtectedRoute>
+                  <OrderConfirmation />
+                </ProtectedRoute>
+              } />
 
-     
-      </Routes>
-    </Router>
+              <Route path="/orders" element={
+                <ProtectedRoute>
+                  <OrderTracking />
+                </ProtectedRoute>
+              } />
+
+              <Route path="/payment" element={
+                <ProtectedRoute>
+                  <PaymentPage />
+                </ProtectedRoute>
+              } />
+                    </Routes>
+                    <PaymentButton />
+                  </div>
+                </Router>
+              </CartProvider>
+            </TableProvider>
   );
 }
 
