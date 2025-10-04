@@ -1,9 +1,37 @@
+/**
+ * CART PAGE - Sepet Sayfası
+ * 
+ * Bu sayfa müşterinin sepetindeki ürünleri gösterir ve sipariş vermesini sağlar.
+ * 
+ * İÇERİK:
+ * - Sepetteki ürünlerin listesi
+ * - Her ürün için: resim, ad, fiyat, miktar
+ * - Miktar artırma/azaltma butonları
+ * - Ürün silme butonu
+ * - Toplam tutar hesaplama
+ * - "Sipariş Ver" butonu
+ * - Sepet boşsa: boş sepet mesajı ve menüye dön butonu
+ * 
+ * ÖZELLİKLER:
+ * - Gerçek zamanlı fiyat güncelleme
+ * - Sipariş verme sırasında loading animasyonu
+ * - Sipariş verildikten sonra otomatik yönlendirme
+ * - Sepet temizleme (sipariş verildikten sonra)
+ * - Sipariş durumu takibi (hasOrdered state)
+ * 
+ * KULLANICI DENEYİMİ:
+ * 1. Müşteri sepetindeki ürünleri görür
+ * 2. Miktarları ayarlar veya ürünleri siler
+ * 3. Toplam tutarı kontrol eder
+ * 4. "Sipariş Ver" butonuna tıklar
+ * 5. Sipariş onay sayfasına yönlendirilir
+ */
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
 const CartPage = () => {
-  const { cart, removeFromCart, updateQuantity, calculateTotal, clearCart } = useCart();
+  const { cart, removeFromCart, updateQuantity, calculateTotal, clearCart, placeOrder: placeOrderContext } = useCart();
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const navigate = useNavigate();
   const total = calculateTotal();
@@ -12,7 +40,7 @@ const CartPage = () => {
     setIsPlacingOrder(true);
     // Simüle edilmiş sipariş işlemi
     await new Promise(resolve => setTimeout(resolve, 2000));
-    clearCart();
+    placeOrderContext(); // Context'teki placeOrder fonksiyonunu çağır
     navigate("/confirmation");
   };
 

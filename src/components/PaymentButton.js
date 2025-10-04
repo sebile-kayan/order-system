@@ -1,9 +1,36 @@
+/**
+ * PAYMENT BUTTON COMPONENT - Floating Ödeme Butonu
+ * 
+ * Bu bileşen sağ alt köşede sabit duran toplam tutar göstergesidir.
+ * 
+ * İÇERİK:
+ * - 💳 Para ikonu
+ * - Toplam tutar bilgisi
+ * - Responsive metin (mobilde sadece tutar, desktop'ta "Toplam: ₺X")
+ * 
+ * ÖZELLİKLER:
+ * - Her zaman görünür (sepet boş olsa bile)
+ * - Sipariş verildikten sonra da tutarı gösterir
+ * - Floating (sabit) pozisyon
+ * - Responsive tasarım
+ * - Yeşil renk teması
+ * - Tıklanamaz (sadece bilgi amaçlı)
+ * 
+ * TUTAR HESAPLAMA:
+ * - Sipariş verilmişse: Kaydedilen tutarı gösterir (orderTotal)
+ * - Sipariş verilmemişse: Sepet tutarını gösterir (calculateTotal)
+ * 
+ * KULLANICI DENEYİMİ:
+ * 1. Müşteri her zaman toplam tutarı görebilir
+ * 2. Sepet durumu değişse bile tutar görünür kalır
+ * 3. Sipariş verildikten sonra da tutar bilgisi korunur
+ */
 import React from 'react';
 import { useCart } from '../context/CartContext';
 
 const PaymentButton = () => {
-  const { calculateTotal } = useCart();
-  const total = calculateTotal();
+  const { calculateTotal, hasOrdered, orderTotal } = useCart();
+  const total = hasOrdered ? orderTotal : calculateTotal();
 
   // Buton her zaman görünür olacak, sepet boş olsa bile
   return (

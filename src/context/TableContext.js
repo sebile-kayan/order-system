@@ -1,3 +1,39 @@
+/**
+ * TABLE CONTEXT - Masa Oturum Yönetim Sistemi
+ * 
+ * Bu context masa oturumunu ve QR kod sistemini yönetir.
+ * 
+ * İÇERİK:
+ * - Masa bilgileri (tableInfo)
+ * - Oturum bilgileri (sessionInfo)
+ * - QR kod verisi
+ * - Loading ve hata durumları
+ * 
+ * FONKSİYONLAR:
+ * - startMockSession: Mock masa oturumu başlatır
+ * - endSession: Oturumu sonlandırır
+ * - isSessionActive: Oturumun aktif olup olmadığını kontrol eder
+ * - extractTableInfoFromURL: URL'den masa bilgilerini çıkarır
+ * 
+ * ÖZELLİKLER:
+ * - Mock QR kod sistemi (gerçek QR yok)
+ * - LocalStorage ile oturum kalıcılığı
+ * - URL parametrelerinden masa bilgisi çıkarma
+ * - Oturum sonlandırıldığında tüm verileri temizleme
+ * - Otomatik oturum başlatma
+ * 
+ * QR KOD SİSTEMİ:
+ * - Mock veri: businessId_tableId_sessionToken
+ * - URL formatı: ?qr=EsSe_5_abc123
+ * - Otomatik oturum başlatma
+ * - Masa bilgisi çıkarma
+ * 
+ * KULLANIM:
+ * - Tüm sayfalarda masa bilgisi için
+ * - Oturum kontrolü için
+ * - QR kod işlemleri için
+ * - Çıkış işlemleri için
+ */
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 
 const TableContext = createContext();
@@ -124,12 +160,14 @@ export const TableProvider = ({ children }) => {
   // Oturumu sonlandır
   const endSession = () => {
     localStorage.removeItem('tableSession');
+    localStorage.removeItem('hasOrdered'); // Sipariş durumunu da sıfırla
+    localStorage.removeItem('orderTotal'); // Sipariş tutarını da sıfırla
     dispatch({ type: 'CLEAR_SESSION' });
     // URL'deki QR parametresini temizle
     const newUrl = window.location.origin + window.location.pathname;
     window.history.replaceState({}, '', newUrl);
-    // Sayfayı yenile
-    window.location.reload();
+    // Menü sayfasına yönlendir
+    window.location.href = '/';
   };
 
   // Oturumun aktif olup olmadığını kontrol et

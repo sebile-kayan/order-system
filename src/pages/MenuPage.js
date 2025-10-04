@@ -1,3 +1,31 @@
+/**
+ * MENU PAGE - Ana Menü Sayfası
+ * 
+ * Bu sayfa restoran menüsünü gösterir ve müşterilerin sipariş vermesini sağlar.
+ * 
+ * İÇERİK:
+ * - Restoran menü ürünleri (yemekler, içecekler, tatlılar vb.)
+ * - Kategori filtreleme (Çorba, Ana Yemek, Salata, İçecekler, Tatlı vb.)
+ * - Vejetaryen ürünler için özel filtre
+ * - Arama fonksiyonu (ürün adı ve açıklamasında arama)
+ * - Ürün resimleri ve fiyat bilgileri
+ * - "Sepete Ekle" butonu (her ürün için)
+ * - Sepete ekleme bildirimi (geçici popup)
+ * - Responsive tasarım (mobil: 2 sütun, desktop: 3 sütun)
+ * 
+ * ÖZELLİKLER:
+ * - Çoklu kategori desteği (bir ürün birden fazla kategoride olabilir)
+ * - Dinamik kategori sıralaması (restoran menü sırası)
+ * - Vejetaryen ürünler için yeşil etiket ve 🌱 ikonu
+ * - Gerçek zamanlı filtreleme ve arama
+ * - Sepet sayısı göstergesi
+ * 
+ * KULLANICI DENEYİMİ:
+ * 1. Müşteri menüye girer
+ * 2. Kategori seçerek ürünleri filtreler
+ * 3. İstediği ürünleri sepete ekler
+ * 4. Sepete giderek siparişi tamamlar
+ */
 import React, { useState } from "react";
 import menuData from "../data/menuData";
 import { useCart } from "../context/CartContext";
@@ -6,16 +34,39 @@ const MenuPage = () => {
   const { addToCart } = useCart();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [showVegetarianOnly, setShowVegetarianOnly] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [addedItem, setAddedItem] = useState("");
-  // Filtreleme ve arama
-  const categories = ["all", ...new Set(menuData.map(item => item.category))];
+  
+  // Restoran menü sıralaması
+  const categoryOrder = [
+    "all",
+    "Çorba",
+    "Meze", 
+    "Ana Yemek",
+    "Salata",
+    "Vejetaryen",
+    "Tatlı",
+    "Sıcak İçecek",
+    "Soğuk İçecek"
+  ];
+  
+  const allCategories = new Set();
+  menuData.forEach(item => {
+    item.categories.forEach(cat => allCategories.add(cat));
+  });
+  
+  // Kategorileri restoran sırasına göre düzenle
+  const categories = categoryOrder.filter(cat => 
+    cat === "all" || allCategories.has(cat)
+  );
   
   const filteredItems = menuData.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          item.description?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "all" || item.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+    const matchesCategory = selectedCategory === "all" || item.categories.includes(selectedCategory);
+    const matchesVegetarian = !showVegetarianOnly || item.categories.includes("Vejetaryen");
+    return matchesSearch && matchesCategory && matchesVegetarian;
   });
 
   const handleAddToCart = (item) => {
@@ -57,6 +108,27 @@ const MenuPage = () => {
               </select>
             </div>
           </div>
+          
+          {/* Vejetaryen Filtresi */}
+          <div className="flex items-center gap-4">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showVegetarianOnly}
+                onChange={(e) => setShowVegetarianOnly(e.target.checked)}
+                className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 focus:ring-2"
+              />
+              <span className="text-sm font-medium text-gray-700">
+                🌱 Sadece Vejetaryen Ürünler
+              </span>
+            </label>
+            
+            {showVegetarianOnly && (
+              <div className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                {filteredItems.length} vejetaryen ürün bulundu
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Menü Öğeleri */}
@@ -75,6 +147,25 @@ const MenuPage = () => {
                 {item.description && (
                   <p className="text-gray-600 text-sm mb-3 line-clamp-2">{item.description}</p>
                 )}
+                
+                {/* Kategoriler */}
+                <div className="mb-3">
+                  <div className="flex flex-wrap gap-1">
+                    {item.categories.map((category, index) => (
+                      <span 
+                        key={index}
+                        className={`px-2 py-1 text-xs rounded-full ${
+                          category === "Vejetaryen" 
+                            ? "bg-green-100 text-green-700 font-medium" 
+                            : "bg-gray-100 text-gray-600"
+                        }`}
+                      >
+                        {category === "Vejetaryen" ? "🌱 " : ""}{category}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="flex justify-between items-center">
                   <p className="text-orange-600 font-bold text-lg">₺{item.price}</p>
                   <button 

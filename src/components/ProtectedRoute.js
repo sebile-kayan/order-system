@@ -1,3 +1,33 @@
+/**
+ * PROTECTED ROUTE COMPONENT - Korumalı Sayfa Bileşeni
+ * 
+ * Bu bileşen belirli sayfaların sadece aktif masa oturumu olan kullanıcılar tarafından erişilebilmesini sağlar.
+ * 
+ * İÇERİK:
+ * - Oturum kontrolü
+ * - Loading durumu
+ * - QR kod gerekli mesajı
+ * - Hata durumu yönetimi
+ * 
+ * ÖZELLİKLER:
+ * - Masa oturumu kontrolü
+ * - QR kod varlığı kontrolü
+ * - Loading animasyonu
+ * - Kullanıcı dostu hata mesajları
+ * - Otomatik yönlendirme koruması
+ * 
+ * KORUNAN SAYFALAR:
+ * - MenuPage (/)
+ * - CartPage (/cart)
+ * - OrderConfirmation (/confirmation)
+ * - OrderTracking (/orders)
+ * - PaymentPage (/payment)
+ * 
+ * KULLANIM:
+ * - App.js'de korumalı sayfaları sarmalar
+ * - QR kod olmadan erişimi engeller
+ * - Kullanıcıyı bilgilendirir
+ */
 import React from 'react';
 import { useTable } from '../context/TableContext';
 

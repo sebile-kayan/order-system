@@ -1,3 +1,34 @@
+/**
+ * CART CONTEXT - Sepet Yönetim Sistemi
+ * 
+ * Bu context sepet işlemlerini ve sipariş durumunu yönetir.
+ * 
+ * İÇERİK:
+ * - Sepet ürünleri listesi
+ * - Sipariş durumu (hasOrdered)
+ * - Sipariş tutarı (orderTotal)
+ * - LocalStorage entegrasyonu
+ * 
+ * FONKSİYONLAR:
+ * - addToCart: Ürün sepete ekler
+ * - removeFromCart: Ürünü sepetten çıkarır
+ * - updateQuantity: Ürün miktarını günceller
+ * - clearCart: Sepeti temizler
+ * - calculateTotal: Toplam tutarı hesaplar
+ * - placeOrder: Sipariş verir (hasOrdered=true yapar)
+ * - resetOrderStatus: Sipariş durumunu sıfırlar
+ * 
+ * ÖZELLİKLER:
+ * - LocalStorage ile kalıcı veri saklama
+ * - Sipariş verildikten sonra sepet temizlenir
+ * - Sipariş tutarı korunur (ödeme için)
+ * - Oturum sonlandırıldığında tüm veriler temizlenir
+ * 
+ * KULLANIM:
+ * - Tüm sayfalarda sepet işlemleri için
+ * - Sipariş durumu kontrolü için
+ * - Tutar hesaplamaları için
+ */
 import React, { createContext, useContext, useReducer } from 'react';
 
 const CartContext = createContext();
@@ -37,6 +68,16 @@ const cartReducer = (state, action) => {
 
 export const CartProvider = ({ children }) => {
   const [cart, dispatch] = useReducer(cartReducer, []);
+  const [hasOrdered, setHasOrdered] = React.useState(() => {
+    // localStorage'dan sipariş durumunu oku
+    const stored = localStorage.getItem('hasOrdered');
+    return stored === 'true';
+  });
+  const [orderTotal, setOrderTotal] = React.useState(() => {
+    // localStorage'dan sipariş tutarını oku
+    const stored = localStorage.getItem('orderTotal');
+    return stored ? parseFloat(stored) : 0;
+  });
 
   const addToCart = (item) => {
     dispatch({ type: 'ADD_TO_CART', payload: item });
@@ -54,6 +95,22 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: 'CLEAR_CART' });
   };
 
+  const placeOrder = () => {
+    const currentTotal = calculateTotal();
+    setHasOrdered(true);
+    setOrderTotal(currentTotal);
+    localStorage.setItem('hasOrdered', 'true');
+    localStorage.setItem('orderTotal', currentTotal.toString());
+    dispatch({ type: 'CLEAR_CART' });
+  };
+
+  const resetOrderStatus = () => {
+    setHasOrdered(false);
+    setOrderTotal(0);
+    localStorage.removeItem('hasOrdered');
+    localStorage.removeItem('orderTotal');
+  };
+
   const calculateTotal = () => {
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   };
@@ -69,7 +126,11 @@ export const CartProvider = ({ children }) => {
     updateQuantity,
     clearCart,
     calculateTotal,
-    getCartItemCount
+    getCartItemCount,
+    hasOrdered,
+    orderTotal,
+    placeOrder,
+    resetOrderStatus
   };
 
   return (

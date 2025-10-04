@@ -1,3 +1,28 @@
+/**
+ * ORDER CONFIRMATION PAGE - Sipariş Onay Sayfası
+ * 
+ * Bu sayfa sipariş verildikten sonra müşteriye onay mesajı gösterir.
+ * 
+ * İÇERİK:
+ * - Başarı ikonu (yeşil tik)
+ * - "Siparişiniz Verildi!" başlığı
+ * - Açıklama metni (garson siparişi getirecek)
+ * - Tahmini süre bilgisi (15-20 dakika)
+ * - Rastgele sipariş numarası
+ * - "Menüye Dön" butonu
+ * 
+ * ÖZELLİKLER:
+ * - Tek buton tasarımı (sadece menüye dön)
+ * - Rastgele sipariş numarası üretimi
+ * - Responsive tasarım
+ * - Temiz ve anlaşılır mesajlaşma
+ * 
+ * KULLANICI DENEYİMİ:
+ * 1. Müşteri sipariş verir
+ * 2. Bu sayfaya yönlendirilir
+ * 3. Sipariş onayını görür
+ * 4. Menüye dönerek yeni sipariş verebilir
+ */
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -29,12 +54,11 @@ const OrderConfirmation = () => {
               <span className="text-gray-900">#{Math.floor(Math.random() * 10000)}</span>
             </div>
           </div>
-          {/* Butonlar */}
-          <div className="flex space-x-4 w-full">
-            <Link to="/" className="flex-1 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-center">Menüye Dön</Link>
-            <button className="flex-1 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" onClick={() => window.location.href = "/"}>
-              Yeni Sipariş
-            </button>
+          {/* Buton */}
+          <div className="w-full">
+            <Link to="/" className="w-full px-4 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors duration-200 text-center font-medium block">
+              🍽️ Menüye Dön
+            </Link>
           </div>
         </div>
     </div>
