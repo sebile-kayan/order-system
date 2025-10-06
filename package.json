@@ -1,5 +1,5 @@
 {
-  "name": "restoransistemi",
+  "name": "order-system",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -13,7 +13,14 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "docker:build": "docker build -t order-system .",
+    "docker:run": "docker run -p 3000:80 order-system",
+    "docker:dev": "docker-compose --profile dev up",
+    "docker:prod": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "lint": "echo 'Linting not configured yet'",
+    "lint:fix": "echo 'Lint fix not configured yet'"
   },
   "browserslist": {
     "production": [
