@@ -54,10 +54,13 @@ const OrderConfirmation = () => {
               <span className="text-gray-900">#{Math.floor(Math.random() * 10000)}</span>
             </div>
           </div>
-          {/* Buton */}
-          <div className="w-full">
+          {/* Butonlar */}
+          <div className="w-full space-y-3">
             <Link to="/" className="w-full px-4 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors duration-200 text-center font-medium block">
               🍽️ Menüye Dön
+            </Link>
+            <Link to="/orders" className="w-full px-4 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 text-center font-medium block">
+              📋 Siparişlerim
             </Link>
           </div>
         </div>
