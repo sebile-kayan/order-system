@@ -35,8 +35,8 @@ npm start
 ### Docker ile Çalıştırma
 
 ```bash
-# Production build
-npm run docker:prod
+# Docker'ı başlat
+npm run docker
 
 # Development mode
 npm run docker:dev
@@ -88,17 +88,12 @@ Proje GitHub Actions ile otomatik CI/CD pipeline'a sahiptir:
 ## 📁 Proje Yapısı
 
 ```
-├── src/
-│   ├── components/     # React bileşenleri
-│   ├── pages/         # Sayfa bileşenleri
-│   ├── context/       # Context API
-│   └── assets/        # Statik dosyalar
+├── src/               # React kaynak kodları
 ├── public/            # Public dosyalar
 ├── .github/workflows/ # CI/CD workflows
-├── Dockerfile         # Production Docker image
-├── Dockerfile.dev     # Development Docker image
-├── docker-compose.yml # Docker Compose konfigürasyonu
-└── nginx.conf         # Nginx konfigürasyonu
+├── Dockerfile         # Docker konfigürasyonu
+├── docker-compose.yml # Docker Compose
+└── nginx.conf         # Web server konfigürasyonu
 ```
 
 ## 🤝 Katkıda Bulunma
@@ -146,8 +141,8 @@ npm start
 ### Running with Docker
 
 ```bash
-# Production build
-npm run docker:prod
+# Start Docker
+npm run docker
 
 # Development mode
 npm run docker:dev

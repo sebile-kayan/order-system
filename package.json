@@ -14,13 +14,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "docker:build": "docker build -t order-system .",
-    "docker:run": "docker run -p 3000:80 order-system",
-    "docker:dev": "docker-compose --profile dev up",
-    "docker:prod": "docker-compose up -d",
-    "docker:down": "docker-compose down",
-    "lint": "echo 'Linting not configured yet'",
-    "lint:fix": "echo 'Lint fix not configured yet'"
+    "docker": "docker-compose up -d",
+    "docker:stop": "docker-compose down"
   },
   "browserslist": {
     "production": [
