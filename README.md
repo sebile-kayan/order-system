@@ -1,35 +1,35 @@
-# Restoran Sipariş Sistemi
+# Order System
 
-Modern React tabanlı restoran sipariş yönetim sistemi.
+Modern React-based restaurant order management system.
 
-## 🚀 Özellikler
+## 🚀 Features
 
-- React 18 ile modern UI/UX
-- Tailwind CSS ile responsive tasarım
+- Modern UI/UX with React 18
+- Responsive design with Tailwind CSS
 - Docker containerization
 - CI/CD pipeline (GitHub Actions)
-- Nginx ile production deployment
+- Production deployment with Nginx
 
-## 🛠️ Teknolojiler
+## 🛠️ Technologies
 
 - **Frontend**: React 18, React Router, Tailwind CSS
 - **Containerization**: Docker, Docker Compose
 - **CI/CD**: GitHub Actions
 - **Web Server**: Nginx
 
-## 📦 Kurulum
+## 📦 Installation
 
-### Geliştirme Ortamı
+### Development Environment
 
 ```bash
-# Bağımlılıkları yükle
+# Install dependencies
 npm install
 
-# Geliştirme sunucusunu başlat
+# Start development server
 npm start
 ```
 
-### Docker ile Çalıştırma
+### Running with Docker
 
 ```bash
 # Production build
@@ -38,34 +38,34 @@ npm run docker:prod
 # Development mode
 npm run docker:dev
 
-# Sadece build
+# Build only
 npm run docker:build
 
-# Container'ı durdur
+# Stop container
 npm run docker:down
 ```
 
-### Manuel Docker Komutları
+### Manual Docker Commands
 
 ```bash
-# Image build et
-docker build -t restoransistemi .
+# Build image
+docker build -t order-system .
 
-# Container çalıştır
-docker run -p 3000:80 restoransistemi
+# Run container
+docker run -p 3000:80 order-system
 
-# Docker Compose ile çalıştır
+# Run with Docker Compose
 docker-compose up -d
 ```
 
-## 🌐 Erişim
+## 🌐 Access
 
 - **Development**: http://localhost:3000
 - **Docker Production**: http://localhost:3000
 
 ## 🔧 Environment Variables
 
-`.env` dosyası oluşturun ve `env.example` dosyasındaki değişkenleri kopyalayın:
+Create `.env` file and copy variables from `env.example`:
 
 ```bash
 cp env.example .env
@@ -73,36 +73,36 @@ cp env.example .env
 
 ## 🚀 CI/CD
 
-Proje GitHub Actions ile otomatik CI/CD pipeline'a sahiptir:
+The project has an automated CI/CD pipeline with GitHub Actions:
 
-- **Test**: Her push/PR'da testler çalışır
-- **Build**: Docker image otomatik build edilir
-- **Deploy**: Main branch'e push'ta otomatik deploy
+- **Test**: Tests run on every push/PR
+- **Build**: Docker image is automatically built
+- **Deploy**: Automatic deploy on main branch push
 
-## 📁 Proje Yapısı
+## 📁 Project Structure
 
 ```
 ├── src/
-│   ├── components/     # React bileşenleri
-│   ├── pages/         # Sayfa bileşenleri
+│   ├── components/     # React components
+│   ├── pages/         # Page components
 │   ├── context/       # Context API
-│   └── assets/        # Statik dosyalar
-├── public/            # Public dosyalar
+│   └── assets/        # Static files
+├── public/            # Public files
 ├── .github/workflows/ # CI/CD workflows
 ├── Dockerfile         # Production Docker image
 ├── Dockerfile.dev     # Development Docker image
-├── docker-compose.yml # Docker Compose konfigürasyonu
-└── nginx.conf         # Nginx konfigürasyonu
+├── docker-compose.yml # Docker Compose configuration
+└── nginx.conf         # Nginx configuration
 ```
 
-## 🤝 Katkıda Bulunma
+## 🤝 Contributing
 
-1. Fork yapın
-2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Commit yapın (`git commit -m 'Add amazing feature'`)
-4. Push yapın (`git push origin feature/amazing-feature`)
-5. Pull Request oluşturun
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Create Pull Request
 
-## 📄 Lisans
+## 📄 License
 
-Bu proje MIT lisansı altında lisanslanmıştır.
+This project is licensed under the MIT License.

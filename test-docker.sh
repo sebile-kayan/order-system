@@ -5,7 +5,7 @@ echo "🐳 Testing Docker setup..."
 
 # Build the image
 echo "Building Docker image..."
-docker build -t restoransistemi-test .
+docker build -t order-system-test .
 
 if [ $? -eq 0 ]; then
     echo "✅ Docker image built successfully"
@@ -16,7 +16,7 @@ fi
 
 # Run the container
 echo "Starting container..."
-docker run -d --name restoransistemi-test -p 3001:80 restoransistemi-test
+docker run -d --name order-system-test -p 3001:80 order-system-test
 
 # Wait for container to start
 sleep 5
@@ -33,7 +33,7 @@ fi
 
 # Cleanup
 echo "Cleaning up..."
-docker stop restoransistemi-test
-docker rm restoransistemi-test
+docker stop order-system-test
+docker rm order-system-test
 
 echo "🎉 Docker test completed!"

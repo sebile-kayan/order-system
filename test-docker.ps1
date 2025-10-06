@@ -3,7 +3,7 @@ Write-Host "🐳 Testing Docker setup..." -ForegroundColor Green
 
 # Build the image
 Write-Host "Building Docker image..." -ForegroundColor Yellow
-docker build -t restoransistemi-test .
+docker build -t order-system-test .
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host "✅ Docker image built successfully" -ForegroundColor Green
@@ -14,7 +14,7 @@ if ($LASTEXITCODE -eq 0) {
 
 # Run the container
 Write-Host "Starting container..." -ForegroundColor Yellow
-docker run -d --name restoransistemi-test -p 3001:80 restoransistemi-test
+docker run -d --name order-system-test -p 3001:80 order-system-test
 
 # Wait for container to start
 Start-Sleep -Seconds 5
@@ -34,7 +34,7 @@ try {
 
 # Cleanup
 Write-Host "Cleaning up..." -ForegroundColor Yellow
-docker stop restoransistemi-test
-docker rm restoransistemi-test
+docker stop order-system-test
+docker rm order-system-test
 
 Write-Host "🎉 Docker test completed!" -ForegroundColor Green
